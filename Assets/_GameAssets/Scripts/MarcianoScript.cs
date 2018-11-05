@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MarcianoScript : MonoBehaviour {
     [SerializeField] LayerMask floorLayer;
-
+    bool haciaDerecha = true;
     [SerializeField] Transform posPies;
     [SerializeField] Text txtPuntuacion;
     [SerializeField] Text txtPuntuacionVida;
@@ -16,6 +16,7 @@ public class MarcianoScript : MonoBehaviour {
     [SerializeField] int vidaMax=100;
     [SerializeField] int puntos = 0;
     [SerializeField] float radioOverlap = 0.1f;
+    [SerializeField] Animator playerAnimator;
     Rigidbody2D rb2D;
     bool saltando = false;
     
@@ -35,39 +36,49 @@ public class MarcianoScript : MonoBehaviour {
         return enSuelo;
     }
 
-    /*Version basada en TAG  y utilizando overlapcircleall
-     * private bool EstaEnElSuelo() {
-        bool enSuelo = false;
-        Collider2D[] cols = Physics2D.OverlapCircleAll(posPies.position, radioOverlap);
-        for (int i = 0; i < cols.Length; i++) {
-            if (cols[i].gameObject.tag == "Suelo") {
-                enSuelo = true;
-                break;
-            }
-        }
-        return enSuelo;
-    }*/
+
     private void Update() {
         if (Input.GetKey(KeyCode.Space)) {
             saltando = true;
         }
     }
     void FixedUpdate () {
+        
         float xPos = Input.GetAxis("Horizontal");
-        //float yPos = Input.GetAxis("Vertical");
+        float yPos = Input.GetAxis("Vertical");
         float ySpeedActual = rb2D.velocity.y;
 
-        if(saltando) {
-            saltando = false;
-            if (EstaEnElSuelo()) {
-                rb2D.velocity = new Vector2(xPos * speed, jumpForce);
-            } else {
+        if (Mathf.Abs(xPos) > 0.01f) {
+            playerAnimator.SetBool("Andar", true);
+           
+           
+        }
+        
+        
+        else {
+            playerAnimator.SetBool("Andar", false);
+            
+           
+
+        }
+
+
+       // if (Mathf.Abs(xPos) > 0.01f ){
+            print("POR AQUI");
+            if(saltando) {
+                saltando = false;
+                if (EstaEnElSuelo()) {
+                    rb2D.velocity = new Vector2(xPos * speed, jumpForce);
+                } else {
+                    rb2D.velocity = new Vector2(xPos * speed, ySpeedActual);
+                }
+            } else if (Mathf.Abs(xPos) > 0.01f) {
                 rb2D.velocity = new Vector2(xPos * speed, ySpeedActual);
             }
-        } else {
-            rb2D.velocity = new Vector2(xPos * speed, ySpeedActual);
-        }
-	}
+       // }
+        
+    }
+  
 
     public void IncrementarPuntuacion(int puntosAIncrementar) {
         puntos = puntos + puntosAIncrementar;
@@ -86,7 +97,7 @@ public class MarcianoScript : MonoBehaviour {
         if (collision.gameObject.CompareTag("Pinchos")) {
             QuitarVida(5);
 
-            //Destroy(collision.gameObject);
+            
         }
     }
     
