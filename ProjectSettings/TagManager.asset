@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Moneda
   - Suelo
-  - Pinchos
   layers:
   - Default
   - TransparentFX

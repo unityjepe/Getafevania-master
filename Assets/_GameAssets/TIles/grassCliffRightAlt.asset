@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: grassCliffRightAlt
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 61df1fb2d91d84f42a707217c70a9ee9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 953251964957c5142a9903755b93806c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
